@@ -1,6 +1,4 @@
-from torch.utils.data import Dataset, DataLoader, IterableDataset
-import os
-import torch
+from torch.utils.data import Dataset
 import numpy as np
 
 # 참고: https://github.com/seujung/KoBART-translation/blob/main/dataset.py
@@ -12,7 +10,6 @@ class Dataset(Dataset):
     def __init__(self, dataset, tokenizer):
         super.__init__()
         self.dataset = dataset
-
         self.tokenizer = tokenizer
 
     def add_padding_data(self, inputs):
@@ -29,7 +26,7 @@ class Dataset(Dataset):
             pad = np.array([self.ignore_index] * (512 - len(inputs)))
             inputs = np.concatenate([inputs, pad])
         else:
-            inputs = inputs[: 512]
+            inputs = inputs[:512]
         return inputs
 
     def __getitem__(self, index):
