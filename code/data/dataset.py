@@ -16,21 +16,20 @@ class Dataset(Dataset):
         self.tokenizer = tokenizer
 
     def add_padding_data(self, inputs):
-        if len(inputs) < self.max_len:
-            pad = np.array([self.pad_index] * (self.max_len - len(inputs)))
+        if len(inputs) < 512:
+            pad = np.array([self.pad_index] * (512 - len(inputs)))
             inputs = np.concatenate([inputs, pad])
         else:
-            inputs = inputs[: self.max_len]
+            inputs = inputs[:512]
 
         return inputs
 
     def add_ignored_data(self, inputs):
-        if len(inputs) < self.max_len:
-            pad = np.array([self.ignore_index] * (self.max_len - len(inputs)))
+        if len(inputs) < 512:
+            pad = np.array([self.ignore_index] * (512 - len(inputs)))
             inputs = np.concatenate([inputs, pad])
         else:
-            inputs = inputs[: self.max_len]
-
+            inputs = inputs[: 512]
         return inputs
 
     def __getitem__(self, index):
